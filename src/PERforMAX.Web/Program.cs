@@ -1,6 +1,12 @@
+﻿using Microsoft.EntityFrameworkCore;
+using PERforMAX.Data;
 using PERforMAX.Web.Components;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<DataContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DataContext' not found.")));
+
+builder.Services.AddQuickGridEntityFrameworkAdapter(); ;
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
